@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace Logica.Models {
     public class Usuario {
@@ -54,7 +55,9 @@ namespace Logica.Models {
         }
 
         public DataTable ListarActivos() {
-            DataTable ret = new DataTable();
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@VerActivos", true));
+            DataTable ret = MiCnn.EjecutarSelect("SPUsuariosListar");
             return ret;
         }
 

@@ -24,7 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             this.TxtUsuario = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnIngresar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -32,6 +31,7 @@
             this.TxtContrasena = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.BtnVerContrasena = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,16 +43,6 @@
             this.TxtUsuario.Size = new System.Drawing.Size(355, 26);
             this.TxtUsuario.TabIndex = 0;
             this.TxtUsuario.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::P520233_FreddyGonzalez.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(94, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(247, 148);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -78,6 +68,7 @@
             this.BtnIngresar.TabIndex = 5;
             this.BtnIngresar.Text = "Ingresar";
             this.BtnIngresar.UseVisualStyleBackColor = false;
+            this.BtnIngresar.Click += new System.EventHandler(this.BtnIngresar_Click);
             // 
             // label2
             // 
@@ -137,6 +128,16 @@
             this.BtnVerContrasena.UseVisualStyleBackColor = false;
             this.BtnVerContrasena.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnVerContrasena_MouseDown);
             this.BtnVerContrasena.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnVerContrasena_MouseUp);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::P520233_FreddyGonzalez.Properties.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(94, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(247, 148);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
             // 
             // FrmLogin
             // 

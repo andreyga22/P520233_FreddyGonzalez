@@ -29,5 +29,10 @@ namespace P520233_FreddyGonzalez.Formularios {
         private void BtnCerrar_Click(object sender, EventArgs e) {
             Application.Exit();
         }
+
+        private void BtnIngresar_Click(object sender, EventArgs e) {
+            Globales.ObjetosGlobales.MiFormularioPrincipal.Show();
+            this.Hide();
+        }
     }
 }
