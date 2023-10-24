@@ -19,7 +19,8 @@ namespace Logica.Models {
         //luego de escribir las propiedades se digitan las funciones
 
         public DataTable Listar() {
-            DataTable ret = new DataTable();
+            Conexion MiCnn = new Conexion();
+            DataTable ret = MiCnn.EjecutarSelect("SPUsuariosRolListar");
             return ret;
         }
     }

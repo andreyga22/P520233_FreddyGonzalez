@@ -26,6 +26,18 @@ namespace Logica.Models {
         //funciones
         public bool Agregar() {
             bool ret = false;
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Cedula", this.Cedula));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Nombre", this.Nombre));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Correo", this.Correo));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Contrasennia", this.Contrasena));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Telefono", this.Telefono));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Direccion", this.Direccion));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@UsuarioRolID", this.MiUsuarioRol.UsuarioRolID));
+
+            int resultado = MiCnn.EjecutarDML("SPUsuariosAgregar");
+            if (resultado > 0) ret = true; 
+
             return ret;
         }
 
@@ -44,13 +56,21 @@ namespace Logica.Models {
             return ret;
         }
 
-        public bool ConsultarPorCedula(string Cedula) {
+        public bool ConsultarPorCedula(string pCedula) {
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Cedula", pCedula));
+            DataTable dt = MiCnn.EjecutarSelect("SPUsuariosConsultarPorCedula");
             bool ret = false;
+            if (dt != null && dt.Rows.Count > 0) ret = true;
             return ret;
         }
 
-        public bool ConsultarPorEmail(string Correo) {
+        public bool ConsultarPorEmail(string pCorreo) {
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Correo", pCorreo));
+            DataTable dt = MiCnn.EjecutarSelect("SPUsuariosConsultarPorCorreo");
             bool ret = false;
+            if (dt != null && dt.Rows.Count > 0) ret = true;
             return ret;
         }
 
