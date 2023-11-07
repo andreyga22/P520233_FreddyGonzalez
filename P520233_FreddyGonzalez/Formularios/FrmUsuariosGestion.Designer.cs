@@ -117,6 +117,9 @@
             this.DgvListaUsuarios.Size = new System.Drawing.Size(749, 301);
             this.DgvListaUsuarios.TabIndex = 3;
             this.DgvListaUsuarios.VirtualMode = true;
+            this.DgvListaUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvListaUsuarios_CellClick);
+            this.DgvListaUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvListaUsuarios_CellContentClick);
+            this.DgvListaUsuarios.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DgvListaUsuarios_DataBindingComplete);
             // 
             // ColUsuarioID
             // 
@@ -443,6 +446,7 @@
             this.BtnModificar.TabIndex = 7;
             this.BtnModificar.Text = "Modificar";
             this.BtnModificar.UseVisualStyleBackColor = false;
+            this.BtnModificar.Click += new System.EventHandler(this.BtnModificar_Click);
             // 
             // BtnEliminar
             // 
@@ -469,6 +473,7 @@
             this.BtnLimpiar.TabIndex = 9;
             this.BtnLimpiar.Text = "Limpiar";
             this.BtnLimpiar.UseVisualStyleBackColor = false;
+            this.BtnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
             // 
             // BtnCerrar
             // 

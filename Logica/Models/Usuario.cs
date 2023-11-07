@@ -30,7 +30,10 @@ namespace Logica.Models {
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Cedula", this.Cedula));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Nombre", this.Nombre));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Correo", this.Correo));
-            MiCnn.ListaDeParametros.Add(new SqlParameter("@Contrasennia", this.Contrasena));
+            Tools.Crypt MiEncriptador = new Tools.Crypt();
+            string ContrasenaEncriptada = MiEncriptador.EncriptarEnUnSentido(this.Contrasena);
+
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Contrasennia", ContrasenaEncriptada));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Telefono", this.Telefono));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Direccion", this.Direccion));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@UsuarioRolID", this.MiUsuarioRol.UsuarioRolID));
@@ -43,6 +46,27 @@ namespace Logica.Models {
 
         public bool Actualizar() {
             bool ret = false;
+
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Cedula", this.Cedula));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Nombre", this.Nombre));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Correo", this.Correo));
+
+
+            Tools.Crypt MiEncriptador = new Tools.Crypt();
+            string ContrasenaEncriptada = MiEncriptador.EncriptarEnUnSentido(this.Contrasena);
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Contrasennia", ContrasenaEncriptada));
+
+
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Contrasennia", this.Contrasena));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Telefono", this.Telefono));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Direccion", this.Direccion));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@UsuarioRolID", this.MiUsuarioRol.UsuarioRolID));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@ID", this.UsuarioID));
+
+            int resultado = MiCnn.EjecutarDML("SPUsuariosActualizar");
+            if (resultado > 0) ret = true;
+
             return ret;
         }
 
@@ -53,6 +77,39 @@ namespace Logica.Models {
 
         public bool ConsultarPorID() {
             bool ret = false;
+
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@ID", this.UsuarioID));
+            DataTable DatosUsuario = new DataTable();
+            DatosUsuario = MiCnn.EjecutarSelect("SPUsuariosConsutlarPorID");
+
+            if (DatosUsuario != null && DatosUsuario.Rows.Count > 0) {
+                ret = true;
+            }
+
+            return ret;
+        }
+
+        public Usuario ConsultarPorID(int idUsuario) {
+            Usuario ret = new Usuario();
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@ID", idUsuario));
+            DataTable DatosUsuario = new DataTable();
+            DatosUsuario = MiCnn.EjecutarSelect("SPUsuariosConsutlarPorID");
+
+            if (DatosUsuario != null && DatosUsuario.Rows.Count > 0) {
+                DataRow MiFila = DatosUsuario.Rows[0];
+                ret.UsuarioID = Convert.ToInt32(MiFila["UsuarioID"]);
+                ret.Nombre = Convert.ToString(MiFila["Nombre"]);
+                ret.Cedula = Convert.ToString(MiFila["Cedula"]);
+                ret.Correo = Convert.ToString(MiFila["Correo"]);
+                ret.Telefono = Convert.ToString(MiFila["Telefono"]);
+                ret.Contrasena = Convert.ToString(MiFila["Contrasennia"]);
+                ret.Direccion = Convert.ToString(MiFila["Direccion"]);
+                ret.MiUsuarioRol.UsuarioRolID = Convert.ToInt32(MiFila["UsuarioRolID"]);
+                ret.MiUsuarioRol.Rol = Convert.ToString(MiFila["Rol"]);
+                ret.Activo = Convert.ToBoolean(MiFila["Activo"]);
+            }
             return ret;
         }
 
