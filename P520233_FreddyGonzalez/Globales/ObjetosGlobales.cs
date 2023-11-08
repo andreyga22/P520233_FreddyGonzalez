@@ -10,5 +10,7 @@ namespace P520233_FreddyGonzalez.Globales {
         //definir un objeto global para el formulario principal
         public static Form MiFormularioPrincipal = new Formularios.FrmPrincipal();
         public static Formularios.FrmUsuariosGestion MiFormularioDeGestionDeUsuarios = new Formularios.FrmUsuariosGestion();
+
+        public static Logica.Models.Usuario MiUsuarioGlobal = new Logica.Models.Usuario();
     }
 }

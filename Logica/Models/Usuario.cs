@@ -58,7 +58,6 @@ namespace Logica.Models {
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Contrasennia", ContrasenaEncriptada));
 
 
-            MiCnn.ListaDeParametros.Add(new SqlParameter("@Contrasennia", this.Contrasena));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Telefono", this.Telefono));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@Direccion", this.Direccion));
             MiCnn.ListaDeParametros.Add(new SqlParameter("@UsuarioRolID", this.MiUsuarioRol.UsuarioRolID));
@@ -72,6 +71,23 @@ namespace Logica.Models {
 
         public bool Eliminar() {
             bool ret = false;
+
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@ID", this.UsuarioID));
+            int resultado = MiCnn.EjecutarDML("SPUsuariosEliminar");
+            if (resultado > 0) ret = true;
+
+            return ret;
+        }
+
+        public bool Activar() {
+            bool ret = false;
+
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@ID", this.UsuarioID));
+            int resultado = MiCnn.EjecutarDML("SPUsuariosActivar");
+            if (resultado > 0) ret = true;
+
             return ret;
         }
 
@@ -131,15 +147,19 @@ namespace Logica.Models {
             return ret;
         }
 
-        public DataTable ListarActivos() {
+        public DataTable ListarActivos(string pFiltro = "") {
             Conexion MiCnn = new Conexion();
             MiCnn.ListaDeParametros.Add(new SqlParameter("@VerActivos", true));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Filtro", pFiltro));
             DataTable ret = MiCnn.EjecutarSelect("SPUsuariosListar");
             return ret;
         }
 
-        public DataTable ListarInactivos() {
-            DataTable ret = new DataTable();
+        public DataTable ListarInactivos(string pFiltro = "") {
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@VerActivos", false));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Filtro", pFiltro));
+            DataTable ret = MiCnn.EjecutarSelect("SPUsuariosListar");
             return ret;
         }
 
