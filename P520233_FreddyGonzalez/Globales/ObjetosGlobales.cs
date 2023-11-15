@@ -12,5 +12,6 @@ namespace P520233_FreddyGonzalez.Globales {
         public static Formularios.FrmUsuariosGestion MiFormularioDeGestionDeUsuarios = new Formularios.FrmUsuariosGestion();
 
         public static Logica.Models.Usuario MiUsuarioGlobal = new Logica.Models.Usuario();
+        public static Formularios.FrmMovimientosInventario MiFormularioMovimientos = new Formularios.FrmMovimientosInventario();
     }
 }

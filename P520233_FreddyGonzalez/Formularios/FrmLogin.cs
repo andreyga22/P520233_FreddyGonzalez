@@ -36,12 +36,17 @@ namespace P520233_FreddyGonzalez.Formularios {
                 string usuario = TxtUsuario.Text.Trim();
                 string contrasennia = TxtContrasena.Text.Trim();
 
-                int IdUsuario = Globales.ObjetosGlobales.MiUsuarioGlobal.Validar();
-
+                int IdUsuario = Globales.ObjetosGlobales.MiUsuarioGlobal.ValidarIngreso(usuario, contrasennia);
+                if (IdUsuario > 0) {
+                    Globales.ObjetosGlobales.MiUsuarioGlobal = Globales.ObjetosGlobales.MiUsuarioGlobal.ConsultarPorID(IdUsuario);
+                    Globales.ObjetosGlobales.MiFormularioPrincipal.Show();
+                    this.Hide();
+                } else {
+                    MessageBox.Show("Acceso denegado!", "Error de validacion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    TxtUsuario.Focus();
+                    TxtUsuario.SelectAll();
+                }
             }
-
-            Globales.ObjetosGlobales.MiFormularioPrincipal.Show();
-            this.Hide();
         }
 
         private void FrmLogin_KeyDown(object sender, KeyEventArgs e) {
