@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,14 @@ namespace Logica.Models {
 
         public DataTable Listar(bool VerActivos = true) {
             DataTable ret = new DataTable();
+            return ret;
+        }
+
+        public DataTable ListarEnMovimientoDetalleProducto(bool VerActivos = true, string Filtro = "") {
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@VerActivos", VerActivos));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Filtro", Filtro));
+            DataTable ret = MiCnn.EjecutarSelect("SPProductosListar");
             return ret;
         }
     }

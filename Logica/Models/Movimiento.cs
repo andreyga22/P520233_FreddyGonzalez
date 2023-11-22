@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,12 @@ namespace Logica.Models {
         }
         public DataTable Listar() {
             DataTable ret = new DataTable();
+            return ret;
+        }
+        public DataTable AsignarEsquemaDelDetalle() {
+            Conexion MiCnn = new Conexion();
+            DataTable ret = MiCnn.EjecutarSelect("SPMovimientoCargarDetalle", true);
+            ret.PrimaryKey = null;
             return ret;
         }
     }
