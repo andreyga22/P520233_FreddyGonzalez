@@ -23,6 +23,33 @@ namespace Logica.Models {
         //funciones
         public bool Agregar() {
             bool ret = false;
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Fecha", this.Fecha));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@Anotaciones", this.Anotaciones));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@TipoMovimiento", this.MiTipo.MovimientoTipoID));
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@UsuarioID", this.MiUsuario.UsuarioID));
+            Object RetornoSPAgregar = MiCnn.EjecutarSELECTEscalar("SPMovimientosAgregarEncabezado");
+
+            int IDMovimientoRecienCreado;
+            if (RetornoSPAgregar != null) {
+                IDMovimientoRecienCreado = Convert.ToInt32(RetornoSPAgregar.ToString());
+
+                foreach (MovimientoDetalle item in this.Detalles) {
+                    Conexion MyCnnDetalle = new Conexion();
+
+                    MyCnnDetalle.ListaDeParametros.Add(new SqlParameter("@IDMovimiento", IDMovimientoRecienCreado));
+                    MyCnnDetalle.ListaDeParametros.Add(new SqlParameter("@IDProducto",item.miProducto.ProductoID));
+                    MyCnnDetalle.ListaDeParametros.Add(new SqlParameter("@Cantidad", item.CantidadMovimiento));
+                    MyCnnDetalle.ListaDeParametros.Add(new SqlParameter("@Costo", item.Costo));
+                    MyCnnDetalle.ListaDeParametros.Add(new SqlParameter("@SubTotal", item.SubTotal));
+                    MyCnnDetalle.ListaDeParametros.Add(new SqlParameter("@TotalIVA", item.TotalIVA));
+                    MyCnnDetalle.ListaDeParametros.Add(new SqlParameter("@PrecioUnitario", item.PrecioUnitario));
+
+                    MyCnnDetalle.EjecutarDML("SPMovimientosAgregarDetalle");
+                }
+                ret = true;
+            }
+            
             return ret;
         }
         public bool Eliminar() {
