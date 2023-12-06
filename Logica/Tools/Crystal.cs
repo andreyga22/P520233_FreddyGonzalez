@@ -27,7 +27,9 @@ namespace Logica.Tools {
                 Reporte.SetDataSource(Datos);
 
                 return Reporte;
-            } else { return null; }
+            } else {
+                return null; 
+            }
         }
     }
 }

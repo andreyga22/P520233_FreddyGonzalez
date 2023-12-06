@@ -76,7 +76,7 @@ namespace Logica.Models {
 
         public ReportDocument Imprimir(ReportDocument document) {
             ReportDocument ret = document;
-            Tools.Crystal ObjCrystal = new Tools.Crystal();
+            Tools.Crystal ObjCrystal = new Tools.Crystal(document);
             DataTable datos = new DataTable();
             Conexion MiCnn = new Conexion();
             MiCnn.ListaDeParametros.Add(new SqlParameter("@ID", this.MovimientoID));
