@@ -89,13 +89,22 @@ namespace P520233_FreddyGonzalez.Formularios {
         private void BtnAplicar_Click(object sender, EventArgs e) {
 
             if (ValidarMovimiento()) {
-                MiMovimientoLocal.Fecha = DtpFecha.Value.Date;
-                MiMovimientoLocal.Anotaciones = TxtAnotaciones.Text.Trim();
-                MiMovimientoLocal.MiTipo.MovimientoTipoID = Convert.ToInt32(CboxTipo.SelectedValue);
-                MiMovimientoLocal.MiUsuario = Globales.ObjetosGlobales.MiUsuarioGlobal;
-                TrasladarDetalles();
-                if (MiMovimientoLocal.Agregar()) {
-                    MessageBox.Show("El movimiento se ha agreagado correctamente.", ":)", MessageBoxButtons.OK);
+                DialogResult respuesta = MessageBox.Show("Desea continuar?", "???", MessageBoxButtons.YesNo);
+                if (respuesta == DialogResult.Yes) {
+                    MiMovimientoLocal.Fecha = DtpFecha.Value.Date;
+                    MiMovimientoLocal.Anotaciones = TxtAnotaciones.Text.Trim();
+                    MiMovimientoLocal.MiTipo.MovimientoTipoID = Convert.ToInt32(CboxTipo.SelectedValue);
+                    MiMovimientoLocal.MiUsuario = Globales.ObjetosGlobales.MiUsuarioGlobal;
+                    TrasladarDetalles();
+                    if (MiMovimientoLocal.Agregar()) {
+                        MessageBox.Show("El movimiento se ha agreagado correctamente.", ":)", MessageBoxButtons.OK);
+                        CrystalDecisions.CrystalReports.Engine.ReportDocument MiReporte = new Reportes.RptMovimiento();
+                        MiReporte = MiMovimientoLocal.Imprimir(MiReporte);
+                        FrmVisualizadorReportes MiVisualizador = new FrmVisualizadorReportes();
+                        MiVisualizador.CrvVisualizador.ReportSource = MiReporte;
+                        MiVisualizador.Show();
+
+                    }
                 }
             }
         }

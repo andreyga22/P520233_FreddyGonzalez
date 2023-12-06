@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -34,6 +35,8 @@ namespace Logica.Models {
             if (RetornoSPAgregar != null) {
                 IDMovimientoRecienCreado = Convert.ToInt32(RetornoSPAgregar.ToString());
 
+                this.MovimientoID = IDMovimientoRecienCreado;
+
                 foreach (MovimientoDetalle item in this.Detalles) {
                     Conexion MyCnnDetalle = new Conexion();
 
@@ -68,6 +71,20 @@ namespace Logica.Models {
             Conexion MiCnn = new Conexion();
             DataTable ret = MiCnn.EjecutarSelect("SPMovimientoCargarDetalle", true);
             ret.PrimaryKey = null;
+            return ret;
+        }
+
+        public ReportDocument Imprimir(ReportDocument document) {
+            ReportDocument ret = document;
+            Tools.Crystal ObjCrystal = new Tools.Crystal();
+            DataTable datos = new DataTable();
+            Conexion MiCnn = new Conexion();
+            MiCnn.ListaDeParametros.Add(new SqlParameter("@ID", this.MovimientoID));
+            datos = MiCnn.EjecutarSelect("SPMovimientoImprimir");
+            if (datos != null && datos.Rows.Count > 0) {
+                ObjCrystal.Datos = datos;
+                ret = ObjCrystal.GenerarReporte();
+            }
             return ret;
         }
     }
