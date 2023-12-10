@@ -63,5 +63,13 @@ namespace P520233_FreddyGonzalez.Formularios {
                 Globales.ObjetosGlobales.MiFormularioMovimientos.Show();
             }
         }
+
+        private void MnuGestionProductos_Click(object sender, EventArgs e) {
+            if (!Globales.ObjetosGlobales.MiFormularioDeGestionDeProductos.Visible) {
+                //reinstancia para limpiar
+                Globales.ObjetosGlobales.MiFormularioDeGestionDeProductos = new FrmProductosGestion();
+                Globales.ObjetosGlobales.MiFormularioDeGestionDeProductos.Show();
+            }
+        }
     }
 }
